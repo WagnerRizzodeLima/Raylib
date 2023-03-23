@@ -2,47 +2,45 @@
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
-typedef struct Player{
-    int id;
-    int hp;
-    int atq1, atq2, atq3, atq4;
-    int def1, def2, def3, def4;
-    Vector2 posicao;
+/*
+typedef struct no{
+    int valor;
+    struct no *proximo;
+
+}No;
+
+typedef struct player{
+    int vivo;
+    int golpe, vida;
 }Player;
 
-typedef struct Inimigo{
-    int id;
-    int hp;
-    int atq1, atq2, atq3, atq4;
-    int def1, def2, def3, def4;
-    Vector2 posicao;
-}Inimigo;
-
-void init_player(Player player){
-    player.id =1;
-    player.hp = 30;
-    player.atq1 = 1;
-    player.atq2 = 2;
-    player.atq3 = 3;
-    player.atq4 = 4;
-    player.def1 = 1;
-    player.def2 = 2;
-    player.def3 = 3;
-    player.def4 = 4;
+void inserir_na_fila(No **fila, int num){
+    No *aux, *novo = malloc(sizeof(No));
+    if(novo){
+        novo->valor = num;
+        novo->proximo = NULL;
+        if(*fila == NULL){
+            *fila = novo;
+        }else{
+            aux = *fila;
+            while(aux->proximo)
+                aux = aux->proximo;
+        }
+    }else
+    printf("\nErro ao alocar memoria");
 }
 
-void init_inimigo(Inimigo inimigo){
-    inimigo.id =1;
-    inimigo.hp = 30;
-    inimigo.atq1 = 1;
-    inimigo.atq2 = 2;
-    inimigo.atq3 = 3;
-    inimigo.atq4 = 4;
-    inimigo.def1 = 1;
-    inimigo.def2 = 2;
-    inimigo.def3 = 3;
-    inimigo.def4 = 4;
+No* remover_da_fila(No **fila){
+    No *remover = NULL;
+    if(*fila){
+        remover = *fila;
+        *fila = remover->proximo;
+    }else{
+        printf("\tFila vazia\n");
+    }
+    return remover;
 }
+*/
 
 int main(void)
 {
@@ -50,16 +48,21 @@ int main(void)
     //--------------------------------------------------------------------------------------
     const int screenWidth = 1360;
     const int screenHeight = 768;
-    
+    /*
     Player player;
-    init_player(player);
+    player.vivo = 1;
+    player.vida = 40;
     Vector2 posicaoPlayer = {200, 450};
     
-    Inimigo inimigo;
-    init_inimigo(inimigo);
-    Vector2 posicaoInimigo = {1100, 150};
-    
+    Player inimigo;
+    inimigo.vivo = 1;
+    inimigo.vida = 40;
+    Vector2 posicaoInimigo = {1100, 150};    
 
+    No *r, *fila = NULL;
+
+    int dano = 0, opcao, cont;
+    */
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
     Image image = LoadImage("Sprites/Fundo.png");
@@ -96,9 +99,83 @@ int main(void)
             // TODO: Draw everything that requires to be drawn at this point:
             //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);  // Example
             DrawTexture(texturaFundo, 0, 0, WHITE);
-            DrawTexture(texturaPlayer, posicaoPlayer.x, posicaoPlayer.y, WHITE);
-            DrawTexture(texturaInimigo,posicaoInimigo.x, posicaoInimigo.y, WHITE);
-            
+            /*
+            do{
+                printf("\t\nEscolha um golpe:\n");
+                printf("\t1-Magma\n");
+                printf("\t2-Fogo\n");
+                printf("\t2-Terra\n");
+                printf("\tComando:");
+                scanf("%d", &opcao);
+                switch(opcao){
+                    case 1:
+                        player.golpe = 0;
+                        break;
+                    case 2:
+                        player.golpe = 1;
+                        break;
+                    case 3:
+                        player.golpe = 2;
+                        break;
+                    default:
+                        if(opcao != 0){
+                            printf("\nOpcao invalida!\n");
+                        }
+                    }
+                inimigo.golpe = rand()%3;
+                inserir_na_fila(&fila, inimigo.golpe);
+                r = remover_da_fila(&fila);
+
+                if(player.golpe == r->valor){
+                    printf("\t\nOs golpes se anularam!");
+                }else if(player.golpe == 0 && r->valor == 2){
+                    dano = 8;
+                    inimigo.vida -= dano;
+                    printf("\t\nO inimigo sofreu: %i de dano", dano);
+                    printf("\t\nVida Inimigo %i", inimigo.vida);
+                    printf("\t\nVida Player %i", player.vida);
+                }else if(player.golpe == 0 && r->valor == 1){
+                    dano = 8;
+                    player.vida -= dano;
+                    printf("\t\nO player sofreu: %i de dano", dano);
+                    printf("\t\nVida Inimigo %i", inimigo.vida);
+                    printf("\rt\nVida Player %i", player.vida);
+                }else if(player.golpe == 1 && r->valor == 0){
+                    dano = 8;
+                    inimigo.vida -= dano;
+                    printf("\t\nO inimigo sofreu: %i de dano", dano);
+                    printf("\t\nVida Inimigo %i", inimigo.vida);
+                    printf("\rt\nVida Player %i", player.vida);
+                }else if(player.golpe == 1 && r->valor == 2){
+                    dano = 8;
+                    player.vida -= dano;
+                    printf("\t\nO player sofreu: %i de dano", dano);
+                    printf("\t\nVida Inimigo %i", inimigo.vida);
+                    printf("\rt\nVida Player %i", player.vida);
+                }else if(player.golpe == 2 && r->valor == 1){
+                    dano = 8;
+                    inimigo.vida -= dano;
+                    printf("\t\nO inimigo sofreu: %i de dano", dano);
+                    printf("\t\nVida Inimigo %i", inimigo.vida);
+                    printf("\rt\nVida Player %i", player.vida);
+                }else if(player.golpe == 2 && r->valor == 0){
+                    dano = 8;
+                    player.vida -= dano;
+                    printf("\t\nO player sofreu: %i de dano", dano);
+                    printf("\t\nVida Inimigo %i", inimigo.vida);
+                    printf("\rt\nVida Player %i", player.vida);
+                }
+
+                if(inimigo.vida <= 0){
+                    inimigo.vivo = 0;
+                    //return 0;
+                }
+                if(player.vida <= 0){
+                   player.vivo = 0;
+                   //return 0;
+                }
+            }while(inimigo.vivo!=0);
+            */
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
