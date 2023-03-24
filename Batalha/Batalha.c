@@ -52,30 +52,43 @@ int main(void)
     Player player;
     player.vivo = 1;
     player.vida = 40;
-    Vector2 posicaoPlayer = {200, 450};
-    
+    */
+    Vector2 posicaoPlayer = {120, 180};
+    /*
     Player inimigo;
     inimigo.vivo = 1;
     inimigo.vida = 40;
-    Vector2 posicaoInimigo = {1100, 150};    
+    */
+    Vector2 posicaoInimigo = {800, 30};    
 
-    No *r, *fila = NULL;
+    //No *r, *fila = NULL;
 
     int dano = 0, opcao, cont;
-    */
+    
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
     Image image = LoadImage("Sprites/Fundo.png");
     Texture2D texturaFundo = LoadTextureFromImage(image);
     UnloadImage(image);
     
-    Image playerImage = LoadImage("Sprites/Largato.png");
+    Image playerImage = LoadImage("Sprites/foxy.png");
     Texture2D texturaPlayer = LoadTextureFromImage(playerImage);
     UnloadImage(playerImage);
     
-    Image playerInimigo = LoadImage("Sprites/Espirito3.png");
+    Image playerInimigo = LoadImage("Sprites/magko.png");
     Texture2D texturaInimigo = LoadTextureFromImage(playerInimigo);
     UnloadImage(playerInimigo);
+    
+    Image acoes = LoadImage("Sprites/LayoutAcoes.png");
+    Texture2D texturaLayoutAcoes = LoadTextureFromImage(acoes);
+    UnloadImage(acoes);
+
+    Image listaAtaques = LoadImage("Sprites/ListaAtaques.png");
+    Texture2D texturaListaAtaque = LoadTextureFromImage(listaAtaques);
+    UnloadImage(listaAtaques);
+    Image botaoAtaques = LoadImage("Sprites/BotaoAtaque.png");
+    Texture2D texturaBotaoAtaque = LoadTextureFromImage(botaoAtaques);
+    UnloadImage(botaoAtaques);
 
     // TODO: Load resources / Initialize variables at this point
 
@@ -89,7 +102,10 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update variables / Implement example logic at this point
         //----------------------------------------------------------------------------------
-
+        
+        
+        
+        //----------------------------------------------------------------------------------
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
@@ -99,10 +115,16 @@ int main(void)
             // TODO: Draw everything that requires to be drawn at this point:
             //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);  // Example
             DrawTexture(texturaFundo, 0, 0, WHITE);
+            DrawTexture(texturaInimigo,posicaoInimigo.x, posicaoInimigo.y, WHITE);
+            DrawTexture(texturaPlayer,posicaoPlayer.x, posicaoPlayer.y, WHITE);
+            DrawTexture(texturaLayoutAcoes, 0, 0, WHITE );
+            DrawTexture(texturaListaAtaque, 990, 575, WHITE );
+            DrawTexture(texturaBotaoAtaque, 7, 590, WHITE );
             /*
             do{
                 printf("\t\nEscolha um golpe:\n");
                 printf("\t1-Magma\n");
+                
                 printf("\t2-Fogo\n");
                 printf("\t2-Terra\n");
                 printf("\tComando:");

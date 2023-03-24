@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct no{
     int valor;
@@ -39,6 +40,18 @@ No* remover_da_fila(No **fila){
     return remover;
 }
 
+/*
+    Procedimento para imprimir a fila
+*/
+void imprimir(No *fila){
+    printf("\t------- FILA --------\n\t");
+    while(fila){
+        printf("\n%d ", &fila->valor);
+        fila = fila->proximo;
+    }
+    printf("\n\t------- FIM FILA --------\n");
+}
+
 int main()
 {
     Player player;
@@ -51,24 +64,22 @@ int main()
 
     No *r, *fila = NULL;
 
-    int dano = 0, opcao, cont;
+    int dano = 0, opcao, cont, golpeInimigo[20], i;
 
     // Adiciona valores à fila
-    /*do{
-        inimigo.golpe = rand()%4;
-        int golpe = inimigo.golpe;
-        inserir_na_fila(&fila, golpe);
-        cont++;
-    }while(cont > 20);*/
-
-
-  do{
+    fflush(stdin);
+    do{
+        for(i = 0; i <= 20; i++){
+            golpeInimigo[i] = rand()%3;
+            inserir_na_fila(&fila, golpeInimigo[i]);
+        }
         printf("\t\nEscolha um golpe:\n");
         printf("\t1-Magma\n");
         printf("\t2-Fogo\n");
         printf("\t2-Terra\n");
         printf("\tComando:");
         scanf("%d", &opcao);
+        //r = remover_da_fila(&fila);
         switch(opcao){
             case 1:
                 player.golpe = 0;
@@ -83,11 +94,8 @@ int main()
                 if(opcao != 0){
                     printf("\nOpcao invalida!\n");
                 }
-            }
-        inimigo.golpe = rand()%3;
-        inserir_na_fila(&fila, inimigo.golpe);
+        }
         r = remover_da_fila(&fila);
-
         if(player.golpe == r->valor){
             printf("\t\nOs golpes se anularam!");
         }else if(player.golpe == 0 && r->valor == 2){
@@ -127,7 +135,6 @@ int main()
             printf("\t\nVida Inimigo %i", inimigo.vida);
             printf("\rt\nVida Player %i", player.vida);
         }
-
         if(inimigo.vida <= 0){
             inimigo.vivo = 0;
             //return 0;
@@ -136,6 +143,5 @@ int main()
            player.vivo = 0;
            //return 0;
         }
-
   }while(inimigo.vivo!=0);
 }
