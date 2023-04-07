@@ -73,6 +73,7 @@ int main()
             golpeInimigo[i] = rand()%3;
             inserir_na_fila(&fila, golpeInimigo[i]);
         }
+        //imprimir(fila);
         printf("\t\nEscolha um golpe:\n");
         printf("\t1-Magma\n");
         printf("\t2-Fogo\n");
